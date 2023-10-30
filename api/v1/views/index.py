@@ -23,23 +23,13 @@ def status():
 
 
 @app_views.route('/stats', strict_slashes=False)
-def count():
-    """retrieves the number of each objects by type"""
-
-    avail_mod = {
-        "User": "users",
-        "Amenity": "amenities",
-        "City": "cities",
-        "Place": "places",
-        "Review": "reviews",
-        "State": "states",
-    }
-    model_objs = [Amenity, City, Place, Review, State, User]
-
-    count = {}
-    i = -1
-    for temp in avail_mod.keys():
-        i += 1
-        count[avail_mod[temp]] = storage.count(model_objs[i])
-
-    return jsonify(count)
+def stats():
+    """Retrieves the number of each objects by type"""
+    temp = {}
+    temp['amenities'] = storage.count(Amenity)
+    temp['cities'] = storage.count(City)
+    temp['places'] = storage.count(Place)
+    temp['reviews'] = storage.count(Review)
+    temp['states'] = storage.count(State)
+    temp['users'] = storage.count(User)
+    return jsonify(temp)
